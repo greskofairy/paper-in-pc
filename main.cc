@@ -36,15 +36,15 @@ double g_arc_rate;
 int g_memory_size;
 double g_p_best_rate;
 
-
+ofstream outFile;
 
 int main(int argc, char **argv) {
   //number of runs
-  int num_runs = 2;
+  int num_runs = 51;
   //int num_runs = 5;
   //int num_runs = 2;
     //dimension size. please select from 10, 30, 50, 100
-  g_problem_size = 30;
+  g_problem_size = 10;
   //available number of fitness evaluations 
   g_max_num_evaluations = g_problem_size * 10000;
 
@@ -67,26 +67,17 @@ int main(int argc, char **argv) {
   g_p_best_rate = 0.25;      // iL-SHADE=0.2
 
   // raw data: Record function error value (Fi(x)-Fi(x*)) after (0.01, 0.02, 0.03, 0.05, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0)*MaxFES for each run.
-
+  stringstream ss;
+  ss << g_problem_size;
+  string tmp(ss.str());
+  string fileNameStr="rawDataD"+tmp+".dat";
+  //cout << fileNameStr << endl;
+  char fileName[500];
+  strcpy(fileName,fileNameStr.c_str());
+  //ofstream outFile(fileName, ios::out);
+  outFile.open(fileName, ios::out);
 
  for (int i = 0; i < 30; i++) {
-     stringstream ss;
-     string pro;
-     pro =  to_string((i+1));
-     ss << g_problem_size;
-     string tmp(ss.str());
-     string fileNameStr = "rawDataD" + tmp + "p" + pro + ".csv";
-     
-     //string fileNameStr = "rawDataD" + tmp + ".csv";
-     //cout << fileNameStr << endl;
-     /*
-     char fileName[500];
-     strcpy(fileName, fileNameStr.c_str());
-     cout << fileNameStr << "" << fileName;
-     //ofstream outFile(fileName, ios::out);
-     ofstream outFile;
-     outFile.open(fileName, ios::out);
-     */
     g_function_number = i + 1;
     cout << "\n-------------------------------------------------------" << endl;
     cout << "Function = " << g_function_number << ", Dimension size = " << g_problem_size << ", g_pop_size[_INIT] = " << g_pop_size << "\n" << endl;
@@ -97,7 +88,7 @@ int main(int argc, char **argv) {
 
     for (int j = 0; j < num_runs; j++) { 
       searchAlgorithm *alg = new LSHADE();
-      bsf_fitness_array[j] = alg->run(fileNameStr);
+      bsf_fitness_array[j] = alg->run();
       cout << j + 1 << "th run, " << "error value = " << bsf_fitness_array[j] << endl;
       delete alg;
     }
@@ -112,7 +103,7 @@ int main(int argc, char **argv) {
     cout << "\nFunction = " << g_function_number << ", Dimension size = " << g_problem_size << ",  mean = " << mean_bsf_fitness << ", std = " << std_bsf_fitness << endl;
     free(bsf_fitness_array);
 
-    //outFile << endl;
+    outFile << endl;
   }
 
   return 0;
