@@ -21,10 +21,17 @@
 
 #include"de.h"
 
-Fitness LSHADE::run() {
+Fitness LSHADE::run(string outFile_name) {
   cout << scientific << setprecision(8);
   initializeParameters();
   setSHADEParameters();
+
+  char fileName[500];
+  strcpy(fileName, outFile_name.c_str());
+  cout << outFile_name << "" << fileName;
+  //ofstream outFile(fileName, ios::out);
+  ofstream outFile;
+  outFile.open(fileName, ios::app);
 
   // cout << pop_size << endl;
   // cout << arc_size << endl;
@@ -212,7 +219,10 @@ Fitness LSHADE::run() {
           else if (nfes == (int)(0.9*max_num_evaluations)) outFile << bsf_fitness - optimum << " ";
           else if (nfes == (int)(1.0*max_num_evaluations)) outFile << bsf_fitness - optimum << endl;
       }
-    
+      cout << "optimum = " << optimum << endl;
+    /*if (nfes % 100 == 0) {
+        outFile << bsf_fitness - optimum << " ";
+    }*/
       if (nfes >= max_num_evaluations) break;
     }
     ////////////////////////////////////////////////////////////////////////////
