@@ -34,14 +34,13 @@ extern int g_memory_size;
 extern double g_p_best_rate;
 extern double g_arc_rate;
 
-extern ofstream outFile;
 
 //void cec14_test_func(double *, double *,int,int,int);
 void cec17_test_func(double *, double *,int,int,int);
 
 class searchAlgorithm {
 public:
-  virtual Fitness run() = 0;
+  virtual Fitness run(string) = 0;
 protected:
   void evaluatePopulation(const vector<Individual> &pop, vector<Fitness> &fitness);
   void initializeFitnessFunctionParameters();
@@ -115,7 +114,7 @@ protected:
 
 class LSHADE: public searchAlgorithm {
 public:
-  virtual Fitness run();
+  virtual Fitness run(string);
   void setSHADEParameters();
   void reducePopulationWithSort(vector<Individual> &pop, vector<Fitness> &fitness);
   void operateCurrentToPBest1BinWithArchive(const vector<Individual> &pop, Individual child, int &target, int &p_best_individual, variable &scaling_factor, variable &cross_rate, const vector<Individual> &archive, int &arc_ind_count, int nfes);
