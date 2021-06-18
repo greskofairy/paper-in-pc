@@ -1,22 +1,19 @@
 /*
   L-SHADE implemented by C++ for Special Session & Competition on Real-Parameter Single Objective Optimization at CEC-2014
 
-  Version: 1.0   Date: 16/Apr/2014
+  Version: 1.1  Date: 9/Jun/2014
   Written by Ryoji Tanabe (rt.ryoji.tanabe [at] gmail.com)
 */
 
 #ifndef _HEADER_H_
 #define _HEADER_H_
 
-#include <cstdlib>
+#include <stdlib.h>
 #include<iostream>
 #include <iomanip>
-#include <cstring>
+#include <string.h>
 #include <vector>
-#include<cmath>
-#include <fstream>
-#include <string>
-#include <sstream>
+#include<math.h>
 
 using namespace std;
 
@@ -34,10 +31,7 @@ extern int g_memory_size;
 extern double g_p_best_rate;
 extern double g_arc_rate;
 
-extern ofstream outFile;
-
-//void cec14_test_func(double *, double *,int,int,int);
-void cec17_test_func(double *, double *,int,int,int);
+void cec14_test_func(double *, double *,int,int,int);
 
 class searchAlgorithm {
 public:
@@ -118,7 +112,7 @@ public:
   virtual Fitness run();
   void setSHADEParameters();
   void reducePopulationWithSort(vector<Individual> &pop, vector<Fitness> &fitness);
-  void operateCurrentToPBest1BinWithArchive(const vector<Individual> &pop, Individual child, int &target, int &p_best_individual, variable &scaling_factor, variable &cross_rate, const vector<Individual> &archive, int &arc_ind_count, int nfes);
+  void operateCurrentToPBest1BinWithArchive(const vector<Individual> &pop, Individual child, int &target, int &p_best_individual, variable &scaling_factor, variable &cross_rate, const vector<Individual> &archive, int &arc_ind_count);
 
   int arc_size;
   double arc_rate;
