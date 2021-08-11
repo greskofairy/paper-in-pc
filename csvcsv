@@ -1,0 +1,16 @@
+clc
+clear
+pathA = 'ADGHI_C1_2_10_CEC2017_D100.xlsx';
+for i = 1:30
+    filename = ['rawDataD100p',num2str(i),'.csv'];
+    M = load(filename);
+    b = reshape(M,10000,51);%999,2996,4994,9989
+%     c = repmat(b(end,:),4,1);%1,4,6,11
+%     b = [b;c];
+%     M = M';
+    xlswrite(pathA,b,i);
+    M = [];
+    b =[];
+    c = [];
+    disp(i)
+end
